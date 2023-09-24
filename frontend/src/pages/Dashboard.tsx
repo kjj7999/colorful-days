@@ -8,18 +8,19 @@ import ActionButton from "../components/atoms/ActionButton";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const layout1 = [
-  { i: "a", x: 0, y: 0, w: 1, h: 2 },
-  { i: "b", x: 1, y: 0, w: 3, h: 2 },
-  { i: "c", x: 4, y: 3, w: 1, h: 1 },
+let layout1 = [
+  { i: "a", x: 0, y: 0, w: 1, h: 2, static: true },
+  { i: "b", x: 1, y: 0, w: 3, h: 2, static: true },
+  { i: "c", x: 4, y: 3, w: 1, h: 1, static: true },
 ];
 
 function Dashboard() {
   const [title, setTitle] = useState("Dashboard");
   const [layout, setLayout] = useState({ lg: layout1 });
-  
+  const [isEdit, setIsEdit] = useState(false);
+
   useEffect(() => {
-    console.log("use effect");
+    console.log("use effect " + isEdit);
   });
 
   function onBreakpointChange(breakpoint: string, cols: number) {
@@ -40,8 +41,13 @@ function Dashboard() {
     });
   }
 
-  function handleButtonClick(event : React.MouseEvent<HTMLButtonElement>) {
-    console.log("editButton");
+  function toggleEdit(event: React.MouseEvent<HTMLButtonElement>) {
+    setLayout({
+      lg: layout.lg.map((l) => {
+        return { ...l, static: !l.static };
+      }),
+    });
+    setIsEdit(!isEdit);
   }
 
   return (
@@ -49,7 +55,9 @@ function Dashboard() {
       <div className="p-3">
         <span className={"text-xl font-bold"}>{title}</span>
         <div className={"mt-3"}>
-          <ActionButton onClick={handleButtonClick} icon={<FaRegEdit />}>Edit</ActionButton>
+          <ActionButton onClick={toggleEdit} icon={<FaRegEdit />}>
+            Edit
+          </ActionButton>
         </div>
       </div>
       <ResponsiveGridLayout
