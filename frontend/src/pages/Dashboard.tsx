@@ -16,19 +16,22 @@ let layout1 = [
 
 function Dashboard() {
   const [title, setTitle] = useState("Dashboard");
-  const [layout, setLayout] = useState({ lg: layout1 });
+  const [layout, setLayout] = useState<Layouts>({ lg: layout1 });
+  const [breakpoint, setBreakPoint] = useState<String>("lg");
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     console.log("use effect " + isEdit);
   });
 
-  function onBreakpointChange(breakpoint: string, cols: number) {
-    console.log(`on breakpoint change ${breakpoint}, ${cols}`);
+  function onBreakpointChange(newBreakpoint: string, newCols: number) {
+    setBreakPoint(newBreakpoint);
   }
 
-  function onLayoutChange(layout: Layout[], layouts: Layouts) {
-    console.log(`on layout change`);
+  function onLayoutChange(currentLayout: Layout[], allLayouts: Layouts) {
+    if (breakpoint == 'lg' || breakpoint == 'md') {
+      setLayout({ lg: currentLayout, md: currentLayout });
+    }
   }
 
   function generateDOM() {
