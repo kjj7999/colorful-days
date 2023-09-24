@@ -29,7 +29,7 @@ function Dashboard() {
   }
 
   function onLayoutChange(currentLayout: Layout[], allLayouts: Layouts) {
-    if (breakpoint == 'lg' || breakpoint == 'md') {
+    if (breakpoint == "lg" || breakpoint == "md") {
       setLayout({ lg: currentLayout, md: currentLayout });
     }
   }
@@ -37,7 +37,7 @@ function Dashboard() {
   function generateDOM() {
     return layout.lg.map((l) => {
       return (
-        <div key={l.i}>
+        <div key={l.i} style={{ zIndex: -1 }}>
           <Gadget item={l.i} />
         </div>
       );
@@ -70,6 +70,8 @@ function Dashboard() {
         onBreakpointChange={onBreakpointChange}
         onLayoutChange={onLayoutChange}
         compactType={null}
+        useCSSTransforms={false}
+        style={{ zIndex: 0 }}
       >
         {generateDOM()}
       </ResponsiveGridLayout>
