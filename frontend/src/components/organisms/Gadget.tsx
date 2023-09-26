@@ -1,16 +1,15 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Paper } from "@mui/material";
 import { useOnClickOutside } from "usehooks-ts";
-import GadgetContext from "../molecules/GadgetContext";
 
 interface GadgetProps {
   item: string;
+  onClick: Function;
+  onContextMenu: Function;
 }
 
-function Gadget({ item }: GadgetProps) {
+function Gadget({ item, onClick, onContextMenu }: GadgetProps) {
   const gadgetBox = useRef<HTMLDivElement>(null);
-  const [isContextMenu, setIsContextMenu] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     console.log(`use effect ${item}`);
@@ -18,36 +17,17 @@ function Gadget({ item }: GadgetProps) {
 
   useOnClickOutside(gadgetBox, handleClickOutside);
 
-  function showContextMenu(event: React.MouseEvent<HTMLDivElement>) {
+  function handleContextMenu(event: React.MouseEvent<HTMLDivElement>) {
     event.preventDefault();
-    setIsContextMenu(false);
-    let parentX = 0;
-    let parentY = 0;
-    if (gadgetBox.current) {
-      const gadgetRect = gadgetBox.current.getBoundingClientRect();
-      parentX = gadgetRect.left;
-      parentY = gadgetRect.top;
-      console.log(gadgetBox.current.style);
-    }
-    const newPosition = {
-      x: event.pageX - parentX,
-      y: event.pageY - parentY,
-    };
-    setPosition(newPosition);
-    setIsContextMenu(true);
+    event.stopPropagation();
+    onContextMenu(item, event.pageX, event.pageY);
   }
 
   function handleClick(event: React.MouseEvent<HTMLDivElement>) {
-    setIsContextMenu(false);
+    onClick();
   }
 
   function handleClickOutside() {
-    setIsContextMenu(false);
-    handleClickContextItem("s");
-  }
-
-  function handleClickContextItem(item: string) {
-    console.log(`click item ${item}`);
   }
 
   return (
@@ -55,7 +35,7 @@ function Gadget({ item }: GadgetProps) {
       <div
         className={"w-full h-full"}
         style={{ zIndex: "-1" }}
-        onContextMenu={showContextMenu}
+        onContextMenu={handleContextMenu}
         onClick={handleClick}
         ref={gadgetBox}
       >
@@ -66,8 +46,6 @@ function Gadget({ item }: GadgetProps) {
           {item}
         </Paper>
       </div>
-      {/* Define the custom context menu */}
-      {isContextMenu && <GadgetContext y={position.y} x={position.x} />}
     </>
   );
 }

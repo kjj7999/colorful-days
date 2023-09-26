@@ -5,6 +5,7 @@ import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
 import { FaRegEdit } from "react-icons/fa";
 import Gadget from "../components/organisms/Gadget";
 import ActionButton from "../components/atoms/ActionButton";
+import GadgetContext from "../components/molecules/GadgetContext";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -19,6 +20,8 @@ function Dashboard() {
   const [layout, setLayout] = useState<Layouts>({ lg: layout1 });
   const [breakpoint, setBreakPoint] = useState<String>("lg");
   const [isEdit, setIsEdit] = useState(false);
+  const [isContextMenu, setIsContextMenu] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     console.log("use effect " + isEdit);
@@ -38,7 +41,7 @@ function Dashboard() {
     return layout.lg.map((l) => {
       return (
         <div key={l.i} style={{ zIndex: -1 }}>
-          <Gadget item={l.i} />
+          <Gadget item={l.i} onClick={hideContextMenu} onContextMenu={showContextMenu}/>
         </div>
       );
     });
@@ -53,8 +56,30 @@ function Dashboard() {
     setIsEdit(!isEdit);
   }
 
+  function showContextMenu(item: string, x: number, y: number) {
+    console.log(`show context menu parent ${item}`);
+    setIsContextMenu(false);
+    setPosition({x: x, y: y});
+    setIsContextMenu(true);
+  }
+
+  function hideContextMenu() {
+    console.log(`hide context menu parent`);
+    setIsContextMenu(false);
+  }
+
+  function handleClick(event: React.MouseEvent<HTMLDivElement>) {
+    console.log('parent on click');
+    setIsContextMenu(false);
+  }
+
+  function handleContextMenu(event: React.MouseEvent<HTMLDivElement>) {
+    console.log('parent on context menu');
+    setIsContextMenu(false);
+  }
+
   return (
-    <div>
+    <div onClick={handleClick} onContextMenu={handleContextMenu}>
       <div className="p-3">
         <span className={"text-xl font-bold"}>{title}</span>
         <div className={"mt-3"}>
@@ -75,6 +100,7 @@ function Dashboard() {
       >
         {generateDOM()}
       </ResponsiveGridLayout>
+      {isContextMenu && <GadgetContext y={position.y} x={position.x} />}
     </div>
   );
 }
