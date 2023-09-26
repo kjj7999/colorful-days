@@ -4,12 +4,14 @@ import { useOnClickOutside } from "usehooks-ts";
 
 interface GadgetProps {
   item: string;
+  editable: boolean;
   onClick: Function;
   onContextMenu: Function;
 }
 
-function Gadget({ item, onClick, onContextMenu }: GadgetProps) {
+function Gadget({ item, editable, onClick, onContextMenu }: GadgetProps) {
   const gadgetBox = useRef<HTMLDivElement>(null);
+  const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
     console.log(`use effect ${item}`);
@@ -30,6 +32,14 @@ function Gadget({ item, onClick, onContextMenu }: GadgetProps) {
   function handleClickOutside() {
   }
 
+  function handleMouseEnter() {
+    setIsHover(true);
+  }
+
+  function handleMouseLeave() {
+    setIsHover(false);
+  }
+
   return (
     <>
       <div
@@ -37,6 +47,8 @@ function Gadget({ item, onClick, onContextMenu }: GadgetProps) {
         style={{ zIndex: "-1" }}
         onContextMenu={handleContextMenu}
         onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         ref={gadgetBox}
       >
         <Paper
@@ -44,6 +56,7 @@ function Gadget({ item, onClick, onContextMenu }: GadgetProps) {
           sx={{ width: 1, height: 1, border: 1, padding: 1 }}
         >
           {item}
+          {(isHover && editable) && <span>Hover</span>}
         </Paper>
       </div>
     </>

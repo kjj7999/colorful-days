@@ -32,7 +32,7 @@ function Dashboard() {
   }
 
   function onLayoutChange(currentLayout: Layout[], allLayouts: Layouts) {
-    if (breakpoint == "lg" || breakpoint == "md") {
+    if (breakpoint === "lg" || breakpoint === "md") {
       setLayout({ lg: currentLayout, md: currentLayout });
     }
   }
@@ -41,7 +41,7 @@ function Dashboard() {
     return layout.lg.map((l) => {
       return (
         <div key={l.i} style={{ zIndex: -1 }}>
-          <Gadget item={l.i} onClick={hideContextMenu} onContextMenu={showContextMenu}/>
+          <Gadget item={l.i} editable={l.static === false} onClick={hideContextMenu} onContextMenu={showContextMenu}/>
         </div>
       );
     });
