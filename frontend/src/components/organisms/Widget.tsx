@@ -1,20 +1,35 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Paper } from "@mui/material";
 import { useOnClickOutside } from "usehooks-ts";
+import GroupWidget from "./GroupWidget";
+import CounterWidget from "./CounterWidget";
+import ProgressWidget from "./ProgressWidget";
+import TableWidget from "./TableWidget";
+import LinkWidget from "./LinkWidget";
 
 interface WidgetProps {
   item: string;
   editable: boolean;
   onClick: Function;
   onContextMenu: Function;
+  type: string;
 }
 
-function Widget({ item, editable, onClick, onContextMenu }: WidgetProps) {
+const WIDGET_COMPONENTS: Record<string, React.FC> = {
+  "group": GroupWidget,
+  "counter": CounterWidget,
+  "progress": ProgressWidget,
+  "table": TableWidget,
+  "link": LinkWidget,
+};
+
+
+function Widget({ item, editable, onClick, onContextMenu, type }: WidgetProps) {
   const gadgetBox = useRef<HTMLDivElement>(null);
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
-    console.log(`use effect ${item}`);
+    console.log(`use effect ${item} ${type}`);
   }, []);
 
   useOnClickOutside(gadgetBox, handleClickOutside);
@@ -40,6 +55,8 @@ function Widget({ item, editable, onClick, onContextMenu }: WidgetProps) {
     setIsHover(false);
   }
 
+  const WidgetComponent = WIDGET_COMPONENTS[type];
+
   return (
     <>
       <div
@@ -57,6 +74,7 @@ function Widget({ item, editable, onClick, onContextMenu }: WidgetProps) {
         >
           {item}
           {(isHover && editable) && <span>Hover</span>}
+          <WidgetComponent />
         </Paper>
       </div>
     </>

@@ -15,6 +15,12 @@ let layout1 = [
   { i: "c", x: 4, y: 3, w: 1, h: 1, static: true },
 ];
 
+let gadgetProps = [
+  { "gadgetType": "counter" },
+  { "gadgetType": "progress" },
+  { "gadgetType": "table" },
+]
+
 function Dashboard() {
   const [title, setTitle] = useState("Dashboard");
   const [layout, setLayout] = useState<Layouts>({ lg: layout1 });
@@ -38,10 +44,10 @@ function Dashboard() {
   }
 
   function generateDOM() {
-    return layout.lg.map((l) => {
+    return layout.lg.map((l, index) => {
       return (
         <div key={l.i} style={{ zIndex: -1 }}>
-          <Widget item={l.i} editable={l.static === false} onClick={hideContextMenu} onContextMenu={showContextMenu}/>
+          <Widget item={l.i} editable={l.static === false} onClick={hideContextMenu} onContextMenu={showContextMenu} type={gadgetProps[index].gadgetType} />
         </div>
       );
     });
