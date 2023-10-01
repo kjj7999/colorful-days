@@ -3,9 +3,9 @@ import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
 import { FaRegEdit } from "react-icons/fa";
-import Gadget from "../components/organisms/Gadget";
+import Widget from "../components/organisms/Widget";
 import ActionButton from "../components/atoms/ActionButton";
-import GadgetContext from "../components/molecules/GadgetContext";
+import WidgetContextMenu from "../components/molecules/WidgetContextMenu";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -41,7 +41,7 @@ function Dashboard() {
     return layout.lg.map((l) => {
       return (
         <div key={l.i} style={{ zIndex: -1 }}>
-          <Gadget item={l.i} editable={l.static === false} onClick={hideContextMenu} onContextMenu={showContextMenu}/>
+          <Widget item={l.i} editable={l.static === false} onClick={hideContextMenu} onContextMenu={showContextMenu}/>
         </div>
       );
     });
@@ -100,7 +100,7 @@ function Dashboard() {
       >
         {generateDOM()}
       </ResponsiveGridLayout>
-      {isContextMenu && <GadgetContext y={position.y} x={position.x} />}
+      {isContextMenu && <WidgetContextMenu y={position.y} x={position.x} />}
     </div>
   );
 }

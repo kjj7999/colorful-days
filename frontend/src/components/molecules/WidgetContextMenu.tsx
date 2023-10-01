@@ -6,12 +6,12 @@ import {
   Typography,
 } from "@mui/material";
 
-interface GadgetContextProps {
+interface WidgetContextMenuProps {
   x: number;
   y: number;
 }
 
-function GadgetContext({ x, y }: GadgetContextProps) {
+function WidgetContextMenu({ x, y }: WidgetContextMenuProps) {
   return (
     <Paper
       elevation={3}
@@ -45,4 +45,4 @@ function GadgetContext({ x, y }: GadgetContextProps) {
   );
 }
 
-export default GadgetContext;
+export default WidgetContextMenu;

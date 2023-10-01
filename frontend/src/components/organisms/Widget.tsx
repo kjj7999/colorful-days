@@ -2,14 +2,14 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { Paper } from "@mui/material";
 import { useOnClickOutside } from "usehooks-ts";
 
-interface GadgetProps {
+interface WidgetProps {
   item: string;
   editable: boolean;
   onClick: Function;
   onContextMenu: Function;
 }
 
-function Gadget({ item, editable, onClick, onContextMenu }: GadgetProps) {
+function Widget({ item, editable, onClick, onContextMenu }: WidgetProps) {
   const gadgetBox = useRef<HTMLDivElement>(null);
   const [isHover, setIsHover] = useState(false);
 
@@ -63,4 +63,4 @@ function Gadget({ item, editable, onClick, onContextMenu }: GadgetProps) {
   );
 }
 
-export default Gadget;
+export default Widget;
