@@ -37,14 +37,14 @@ function Widget({
   onContextMenu,
   widgetInfo,
 }: WidgetProps) {
-  const gadgetBox = useRef<HTMLDivElement>(null);
+  const widgetBox = useRef<HTMLDivElement>(null);
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
-    console.log(`use effect ${item} ${widgetInfo.widgetType}`);
+    // console.log(`use effect ${item} ${widgetInfo.widgetType}`);
   }, []);
 
-  useOnClickOutside(gadgetBox, handleClickOutside);
+  useOnClickOutside(widgetBox, handleClickOutside);
 
   function handleContextMenu(event: React.MouseEvent<HTMLDivElement>) {
     event.preventDefault();
@@ -77,7 +77,7 @@ function Widget({
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        ref={gadgetBox}
+        ref={widgetBox}
       >
         <Paper
           component="div"
