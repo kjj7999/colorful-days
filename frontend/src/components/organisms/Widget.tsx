@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, ComponentType } from "react";
 import { Paper } from "@mui/material";
 import { useOnClickOutside } from "usehooks-ts";
 import GroupWidget from "./GroupWidget";
@@ -7,29 +7,41 @@ import ProgressWidget from "./ProgressWidget";
 import TableWidget from "./TableWidget";
 import LinkWidget from "./LinkWidget";
 
+export type WidgetType = "counter" | "progress" | "table" | "group" | "link";
+export type WidgetInfo = {
+  widgetType: WidgetType,
+  title: string,
+  value?: number,
+};
+
+const WIDGET_COMPONENTS : Record<WidgetType, ComponentType<WidgetInfo>>= {
+  group: GroupWidget,
+  counter: CounterWidget,
+  progress: ProgressWidget,
+  table: TableWidget,
+  link: LinkWidget,
+};
+
 interface WidgetProps {
   item: string;
   editable: boolean;
   onClick: Function;
   onContextMenu: Function;
-  type: string;
+  widgetInfo: WidgetInfo;
 }
 
-const WIDGET_COMPONENTS: Record<string, React.FC> = {
-  "group": GroupWidget,
-  "counter": CounterWidget,
-  "progress": ProgressWidget,
-  "table": TableWidget,
-  "link": LinkWidget,
-};
-
-
-function Widget({ item, editable, onClick, onContextMenu, type }: WidgetProps) {
+function Widget({
+  item,
+  editable,
+  onClick,
+  onContextMenu,
+  widgetInfo,
+}: WidgetProps) {
   const gadgetBox = useRef<HTMLDivElement>(null);
   const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
-    console.log(`use effect ${item} ${type}`);
+    console.log(`use effect ${item} ${widgetInfo.widgetType}`);
   }, []);
 
   useOnClickOutside(gadgetBox, handleClickOutside);
@@ -44,8 +56,7 @@ function Widget({ item, editable, onClick, onContextMenu, type }: WidgetProps) {
     onClick();
   }
 
-  function handleClickOutside() {
-  }
+  function handleClickOutside() {}
 
   function handleMouseEnter() {
     setIsHover(true);
@@ -55,7 +66,7 @@ function Widget({ item, editable, onClick, onContextMenu, type }: WidgetProps) {
     setIsHover(false);
   }
 
-  const WidgetComponent = WIDGET_COMPONENTS[type];
+  const WidgetComponent = WIDGET_COMPONENTS[widgetInfo.widgetType];
 
   return (
     <>
@@ -73,8 +84,8 @@ function Widget({ item, editable, onClick, onContextMenu, type }: WidgetProps) {
           sx={{ width: 1, height: 1, border: 1, padding: 1 }}
         >
           {item}
-          {(isHover && editable) && <span>Hover</span>}
-          <WidgetComponent />
+          {isHover && editable && <span>Hover</span>}
+          <WidgetComponent {...widgetInfo} />
         </Paper>
       </div>
     </>

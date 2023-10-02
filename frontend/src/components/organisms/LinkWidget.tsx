@@ -1,9 +1,12 @@
-function LinkWidget() {
+import { WidgetInfo } from "./Widget";
+
+function LinkWidget(prop: WidgetInfo) {
   return (
-    <div>
-      Link Widget
-    </div>
-  )
+    <>
+      <div>{prop.title}</div>
+      <div></div>
+    </>
+  );
 }
 
 export default LinkWidget;

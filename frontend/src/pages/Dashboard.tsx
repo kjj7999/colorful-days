@@ -3,7 +3,7 @@ import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
 import { FaRegEdit } from "react-icons/fa";
-import Widget from "../components/organisms/Widget";
+import Widget, { WidgetInfo } from "../components/organisms/Widget";
 import ActionButton from "../components/atoms/ActionButton";
 import WidgetContextMenu from "../components/molecules/WidgetContextMenu";
 
@@ -15,11 +15,11 @@ let layout1 = [
   { i: "c", x: 4, y: 3, w: 1, h: 1, static: true },
 ];
 
-let gadgetProps = [
-  { "gadgetType": "counter" },
-  { "gadgetType": "progress" },
-  { "gadgetType": "table" },
-]
+let widgetInfos: WidgetInfo[] = [
+  { widgetType: "counter", title: "Acounter", value: 24 },
+  { widgetType: "progress", title: "BProgress" },
+  { widgetType: "table", title: "CTable" },
+];
 
 function Dashboard() {
   const [title, setTitle] = useState("Dashboard");
@@ -44,13 +44,17 @@ function Dashboard() {
   }
 
   function generateDOM() {
-    return layout.lg.map((l, index) => {
-      return (
-        <div key={l.i} style={{ zIndex: -1 }}>
-          <Widget item={l.i} editable={l.static === false} onClick={hideContextMenu} onContextMenu={showContextMenu} type={gadgetProps[index].gadgetType} />
-        </div>
-      );
-    });
+    return layout.lg.map((l, index) => (
+      <div key={l.i} style={{ zIndex: -1 }}>
+        <Widget
+          item={l.i}
+          editable={l.static === false}
+          onClick={hideContextMenu}
+          onContextMenu={showContextMenu}
+          widgetInfo={widgetInfos[index]}
+        />
+      </div>
+    ));
   }
 
   function toggleEdit(event: React.MouseEvent<HTMLButtonElement>) {
@@ -65,7 +69,7 @@ function Dashboard() {
   function showContextMenu(item: string, x: number, y: number) {
     console.log(`show context menu parent ${item}`);
     setIsContextMenu(false);
-    setPosition({x: x, y: y});
+    setPosition({ x: x, y: y });
     setIsContextMenu(true);
   }
 
@@ -75,12 +79,12 @@ function Dashboard() {
   }
 
   function handleClick(event: React.MouseEvent<HTMLDivElement>) {
-    console.log('parent on click');
+    console.log("parent on click");
     setIsContextMenu(false);
   }
 
   function handleContextMenu(event: React.MouseEvent<HTMLDivElement>) {
-    console.log('parent on context menu');
+    console.log("parent on context menu");
     setIsContextMenu(false);
   }
 

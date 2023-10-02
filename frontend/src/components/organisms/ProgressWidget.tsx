@@ -1,9 +1,12 @@
-function ProgressWidget() {
+import { WidgetInfo } from "./Widget";
+
+function ProgressWidget(prop: WidgetInfo) {
   return (
-    <div>
-      Progress Widget
-    </div>
-  )
+    <>
+      <div>{prop.title}</div>
+      <div></div>
+    </>
+  );
 }
 
 export default ProgressWidget;

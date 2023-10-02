@@ -1,9 +1,12 @@
-function TableWidget() {
+import { WidgetInfo } from "./Widget";
+
+function TableWidget(prop: WidgetInfo) {
   return (
-    <div>
-      Table Widget
-    </div>
-  )
+    <>
+      <div>{prop.title}</div>
+      <div></div>
+    </>
+  );
 }
 
 export default TableWidget;

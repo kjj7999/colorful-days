@@ -1,9 +1,12 @@
-function CounterWidget() {
+import { WidgetInfo } from "./Widget";
+
+function CounterWidget(prop: WidgetInfo) {
   return (
-    <div>
-      Counter Widget
-    </div>
-  )
+    <>
+      <div>{prop.title}</div>
+      <div>{prop.value}</div>
+    </>
+  );
 }
 
 export default CounterWidget;

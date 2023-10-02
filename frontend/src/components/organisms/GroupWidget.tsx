@@ -1,9 +1,12 @@
-function GroupWidget() {
+import { WidgetInfo } from "./Widget";
+
+function GroupWidget(prop: WidgetInfo) {
   return (
-    <div>
-      Group Widget
-    </div>
-  )
+    <>
+      <div>{prop.title}</div>
+      <div></div>
+    </>
+  );
 }
 
 export default GroupWidget;
