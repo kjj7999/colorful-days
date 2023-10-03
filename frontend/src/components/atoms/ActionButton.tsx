@@ -4,15 +4,16 @@ import { ReactNode } from "react";
 interface ActionButtonProps {
   icon?: ReactNode;
   children?: ReactNode;
+  size?: "medium" | "small" | "large";
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-function ActionButton({children, icon, onClick}: ActionButtonProps) {
+function ActionButton({children, icon, size = "medium", onClick}: ActionButtonProps) {
   return (
     <div>
       <Button
         variant="outlined"
-        size="medium"
+        size={size}
         color="primary"
         onClick={onClick}
       >
