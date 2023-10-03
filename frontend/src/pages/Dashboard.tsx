@@ -17,7 +17,7 @@ let layout1 = [
 
 let widgetInfos: WidgetInfo[] = [
   { widgetType: "counter", title: "Acounter", value: 24 },
-  { widgetType: "progress", title: "BProgress" },
+  { widgetType: "progress", title: "BProgress", value: 73.5 },
   { widgetType: "table", title: "CTable" },
 ];
 
@@ -30,7 +30,7 @@ function Dashboard() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    console.log("use effect " + isEdit);
+    // console.log("use effect " + isEdit);
   });
 
   function onBreakpointChange(newBreakpoint: string, newCols: number) {
@@ -101,7 +101,7 @@ function Dashboard() {
       <ResponsiveGridLayout
         layouts={layout}
         cols={{ lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 }}
-        rowHeight={60}
+        rowHeight={90}
         onBreakpointChange={onBreakpointChange}
         onLayoutChange={onLayoutChange}
         compactType={null}
