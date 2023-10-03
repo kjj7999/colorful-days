@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, ComponentType } from "react";
-import { Paper } from "@mui/material";
+import { IconButton, Paper } from "@mui/material";
+import { FaEllipsisV, FaRegTrashAlt } from "react-icons/fa";
 import { useOnClickOutside } from "usehooks-ts";
 import GroupWidget from "./GroupWidget";
 import CounterWidget from "./CounterWidget";
@@ -9,12 +10,12 @@ import LinkWidget from "./LinkWidget";
 
 export type WidgetType = "counter" | "progress" | "table" | "group" | "link";
 export type WidgetInfo = {
-  widgetType: WidgetType,
-  title: string,
-  value?: number,
+  widgetType: WidgetType;
+  title: string;
+  value?: number;
 };
 
-const WIDGET_COMPONENTS : Record<WidgetType, ComponentType<WidgetInfo>>= {
+const WIDGET_COMPONENTS: Record<WidgetType, ComponentType<WidgetInfo>> = {
   group: GroupWidget,
   counter: CounterWidget,
   progress: ProgressWidget,
@@ -66,6 +67,18 @@ function Widget({
     setIsHover(false);
   }
 
+  function handleDeleteClick(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log(`delete ${widgetInfo.title}`);
+  }
+
+  function handleDetailClick(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log(`detail ${widgetInfo.title}`);
+    onContextMenu(item, event.pageX, event.pageY);
+  }
   const WidgetComponent = WIDGET_COMPONENTS[widgetInfo.widgetType];
 
   return (
@@ -81,10 +94,30 @@ function Widget({
       >
         <Paper
           component="div"
-          sx={{ width: 1, height: 1, border: 1, padding: 1 }}
+          sx={{
+            width: 1,
+            height: 1,
+            border: 1,
+            padding: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
-          {item}
-          {isHover && editable && <span>Hover</span>}
+          <div>
+            <span className={"font-sans font-bold text-lg text-primary"}>
+              {widgetInfo.title}
+            </span>
+            {isHover && editable && (
+              <span className={"float-right h-full"}>
+                <IconButton size="small" onClick={handleDeleteClick}>
+                  <FaRegTrashAlt className={"text-sm"}/>
+                </IconButton>
+                <IconButton size="small" onClick={handleDetailClick}>
+                  <FaEllipsisV className={"text-sm"}/>
+                </IconButton>
+              </span>
+            )}
+          </div>
           <WidgetComponent {...widgetInfo} />
         </Paper>
       </div>
