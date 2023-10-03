@@ -10,7 +10,6 @@ function ProgressWidget(props: WidgetInfo) {
 
   useEffect(() => {
     setSize(Math.min(width, height));
-    console.log(size);
   }, [width, height]);
 
   return (
