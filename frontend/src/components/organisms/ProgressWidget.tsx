@@ -14,7 +14,7 @@ function ProgressWidget(props: WidgetInfo) {
   }, [width, height]);
 
   return (
-    <div className="w-full h-full" ref={ref}>
+    <div className="relative w-full h-full" ref={ref}>
       <Box
         sx={{
           top: 0,
