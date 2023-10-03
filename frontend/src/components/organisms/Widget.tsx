@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef, ComponentType } from "react";
 import { IconButton, Paper } from "@mui/material";
-import { FaEllipsisV, FaRegTrashAlt } from "react-icons/fa";
 import { useOnClickOutside } from "usehooks-ts";
 import GroupWidget from "./GroupWidget";
 import CounterWidget from "./CounterWidget";
 import ProgressWidget from "./ProgressWidget";
 import TableWidget from "./TableWidget";
 import LinkWidget from "./LinkWidget";
+import { FaEllipsisVertical, FaTrashCan } from "react-icons/fa6";
 
 export type WidgetType = "counter" | "progress" | "table" | "group" | "link";
 export type WidgetInfo = {
@@ -110,10 +110,10 @@ function Widget({
             {isHover && editable && (
               <span className={"float-right h-full"}>
                 <IconButton size="small" onClick={handleDeleteClick}>
-                  <FaRegTrashAlt className={"text-sm"}/>
+                  <FaTrashCan className={"text-md"}/>
                 </IconButton>
                 <IconButton size="small" onClick={handleDetailClick}>
-                  <FaEllipsisV className={"text-sm"}/>
+                  <FaEllipsisVertical className={"text-md"}/>
                 </IconButton>
               </span>
             )}
