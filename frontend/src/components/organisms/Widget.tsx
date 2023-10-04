@@ -1,19 +1,13 @@
 import { useEffect, useState, useRef, ComponentType } from "react";
 import { IconButton, Paper } from "@mui/material";
 import { useOnClickOutside } from "usehooks-ts";
+import { FaEllipsisVertical, FaTrashCan } from "react-icons/fa6";
+import { WidgetType, WidgetInfo } from "./WidgetType";
 import GroupWidget from "./GroupWidget";
 import CounterWidget from "./CounterWidget";
 import ProgressWidget from "./ProgressWidget";
 import TableWidget from "./TableWidget";
 import LinkWidget from "./LinkWidget";
-import { FaEllipsisVertical, FaTrashCan } from "react-icons/fa6";
-
-export type WidgetType = "counter" | "progress" | "table" | "group" | "link";
-export type WidgetInfo = {
-  widgetType: WidgetType;
-  title: string;
-  value?: number;
-};
 
 const WIDGET_COMPONENTS: Record<WidgetType, ComponentType<WidgetInfo>> = {
   group: GroupWidget,
@@ -98,13 +92,12 @@ function Widget({
             width: 1,
             height: 1,
             border: 1,
-            padding: 1,
             display: "flex",
             flexDirection: "column",
           }}
         >
           <div>
-            <span className={"font-sans font-bold text-lg text-primary"}>
+            <span className={"font-sans font-bold text-lg text-primary ml-1"}>
               {widgetInfo.title}
             </span>
             {isHover && editable && (

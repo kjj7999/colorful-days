@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { WidgetInfo } from "./Widget";
 import { useEffect, useState } from "react";
 import { useObserveElementSize } from "../../hooks/useObserverElementSize";
+import { WidgetInfo } from "./WidgetType";
 
 function ProgressWidget(props: WidgetInfo) {
   const { width, height, ref } = useObserveElementSize<HTMLDivElement>();

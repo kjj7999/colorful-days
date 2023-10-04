@@ -1,10 +1,10 @@
-import { WidgetInfo } from "./Widget";
+import { WidgetInfo } from "./WidgetType";
 
 function TableWidget(prop: WidgetInfo) {
   return (
     <>
       <div>{prop.title}</div>
-      <div></div>
+      <div />
     </>
   );
 }

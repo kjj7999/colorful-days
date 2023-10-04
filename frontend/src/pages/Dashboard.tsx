@@ -3,7 +3,9 @@ import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
 import { FaRegEdit } from "react-icons/fa";
-import Widget, { WidgetInfo } from "../components/organisms/Widget";
+import { FaRegCircleXmark, FaRegFloppyDisk } from "react-icons/fa6";
+import Widget from "../components/organisms/Widget";
+import { WidgetInfo } from "../components/organisms/WidgetType";
 import ActionButton from "../components/atoms/ActionButton";
 import WidgetContextMenu from "../components/molecules/WidgetContextMenu";
 
@@ -40,6 +42,19 @@ function Dashboard() {
   function onLayoutChange(currentLayout: Layout[], allLayouts: Layouts) {
     if (breakpoint === "lg" || breakpoint === "md") {
       setLayout({ lg: currentLayout, md: currentLayout });
+    } else if (breakpoint === "sm") {
+      setLayout({
+        lg: layout.lg.map((l) => {
+          return { ...l, static: true };
+        }),
+        md: layout.md.map((l) => {
+          return { ...l, static: true };
+        }),
+        sm: currentLayout.map((l) => {
+          return { ...l, static: true };
+        }),
+      });
+      setIsEdit(false);
     }
   }
 
@@ -92,10 +107,12 @@ function Dashboard() {
     <div onClick={handleClick} onContextMenu={handleContextMenu}>
       <div className="p-3">
         <span className={"text-xl font-bold"}>{title}</span>
-        <div className={"mt-3"}>
-          <ActionButton onClick={toggleEdit} icon={<FaRegEdit />}>
+        <div className={"mt-3 flex"}>
+          {isEdit && <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk />}>Save</ActionButton>}
+          {isEdit && <ActionButton onClick={toggleEdit} icon={<FaRegCircleXmark />}>Cancel</ActionButton>}
+          {!isEdit && <ActionButton onClick={toggleEdit} icon={<FaRegEdit />}>
             Edit
-          </ActionButton>
+          </ActionButton>}
         </div>
       </div>
       <ResponsiveGridLayout
