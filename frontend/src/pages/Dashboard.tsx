@@ -1,35 +1,35 @@
-import { useEffect, useState } from "react";
-import "../../node_modules/react-grid-layout/css/styles.css";
-import "../../node_modules/react-resizable/css/styles.css";
-import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
-import { TextField } from "@mui/material";
-import { FaRegEdit } from "react-icons/fa";
-import { FaRegCircleXmark, FaRegFloppyDisk } from "react-icons/fa6";
-import Widget from "../components/organisms/Widget";
-import { WidgetInfo } from "../components/organisms/WidgetType";
-import ActionButton from "../components/atoms/ActionButton";
-import WidgetContextMenu from "../components/molecules/WidgetContextMenu";
+import { useEffect, useState } from 'react';
+import '../../node_modules/react-grid-layout/css/styles.css';
+import '../../node_modules/react-resizable/css/styles.css';
+import { Layout, Layouts, Responsive, WidthProvider } from 'react-grid-layout';
+import { TextField } from '@mui/material';
+import { FaRegEdit } from 'react-icons/fa';
+import { FaRegCircleXmark, FaRegFloppyDisk } from 'react-icons/fa6';
+import Widget from '../components/organisms/Widget';
+import { WidgetInfo } from '../components/organisms/WidgetType';
+import ActionButton from '../components/atoms/ActionButton';
+import WidgetContextMenu from '../components/molecules/WidgetContextMenu';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-let layout1 = [
-  { i: "a", x: 0, y: 0, w: 1, h: 2, static: true },
-  { i: "b", x: 1, y: 0, w: 3, h: 2, static: true },
-  { i: "c", x: 4, y: 3, w: 1, h: 1, static: true },
+const layout1 = [
+  { i: 'a', x: 0, y: 0, w: 1, h: 2, static: true },
+  { i: 'b', x: 1, y: 0, w: 3, h: 2, static: true },
+  { i: 'c', x: 4, y: 3, w: 1, h: 1, static: true },
 ];
 
-let widgetInfos: WidgetInfo[] = [
-  { widgetType: "counter", title: "Acounter", value: 24 },
-  { widgetType: "progress", title: "BProgress", value: 73.5 },
-  { widgetType: "table", title: "CTable" },
+const widgetInfos: WidgetInfo[] = [
+  { widgetType: 'counter', title: 'Acounter', value: 24 },
+  { widgetType: 'progress', title: 'BProgress', value: 73.5 },
+  { widgetType: 'table', title: 'CTable' },
 ];
 
 function Dashboard() {
-  const [title, setTitle] = useState("Dashboard");
-  const [titleText, setTitleText] = useState("");
+  const [title, setTitle] = useState('Dashboard');
+  const [titleText, setTitleText] = useState('');
   const [layout, setLayout] = useState<Layouts>({ lg: layout1 });
   const [backupLayout, setBackupLayout] = useState<Layouts>({ lg: layout1 });
-  const [breakpoint, setBreakPoint] = useState<String>("lg");
+  const [breakpoint, setBreakPoint] = useState<string>('lg');
   const [isEdit, setIsEdit] = useState(false);
   const [isContextMenu, setIsContextMenu] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -43,9 +43,9 @@ function Dashboard() {
   }
 
   function onLayoutChange(currentLayout: Layout[], allLayouts: Layouts) {
-    if (breakpoint === "lg" || breakpoint === "md") {
+    if (breakpoint === 'lg' || breakpoint === 'md') {
       setLayout({ lg: currentLayout, md: currentLayout, sm: allLayouts.sm });
-    } else if (breakpoint === "sm") {
+    } else if (breakpoint === 'sm') {
       setLayout({
         lg: layout.lg.map((l) => {
           return { ...l, static: true };
@@ -59,20 +59,6 @@ function Dashboard() {
       });
       setIsEdit(false);
     }
-  }
-
-  function generateDOM() {
-    return layout.lg.map((l, index) => (
-      <div key={l.i} style={{ zIndex: -1 }}>
-        <Widget
-          item={l.i}
-          editable={l.static === false}
-          onClick={hideContextMenu}
-          onContextMenu={showContextMenu}
-          widgetInfo={widgetInfos[index]}
-        />
-      </div>
-    ));
   }
 
   function toggleEdit(event: React.MouseEvent<HTMLButtonElement>) {
@@ -108,20 +94,34 @@ function Dashboard() {
   }
 
   function handleClick(event: React.MouseEvent<HTMLDivElement>) {
-    console.log("parent on click");
+    console.log('parent on click');
     setIsContextMenu(false);
   }
 
   function handleContextMenu(event: React.MouseEvent<HTMLDivElement>) {
-    console.log("parent on context menu");
+    console.log('parent on context menu');
     setIsContextMenu(false);
+  }
+
+  function generateDOM() {
+    return layout.lg.map((l, index) => (
+      <div key={l.i} style={{ zIndex: -1 }}>
+        <Widget
+          item={l.i}
+          editable={l.static === false}
+          onClick={hideContextMenu}
+          onContextMenu={showContextMenu}
+          widgetInfo={widgetInfos[index]}
+        />
+      </div>
+    ));
   }
 
   return (
     <div onClick={handleClick} onContextMenu={handleContextMenu}>
       <div className="p-3">
         <div className="h-8">
-          {!isEdit && <span className={"text-2xl font-bold"}>{title}</span>}
+          {!isEdit && <span className={'text-2xl font-bold'}>{title}</span>}
           {isEdit && (
             <TextField
               id="title"
@@ -132,7 +132,7 @@ function Dashboard() {
             />
           )}
         </div>
-        <div className={"mt-3 flex"}>
+        <div className={'mt-3 flex'}>
           {isEdit && (
             <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk />}>
               Save

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
-import { useObserveElementSize } from "../../hooks/useObserverElementSize";
-import { WidgetInfo } from "./WidgetType";
+import { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
+import { useObserveElementSize } from '../../hooks/useObserverElementSize';
+import { WidgetInfo } from './WidgetType';
 
 function CounterWidget(props: WidgetInfo) {
   const { width, height, ref } = useObserveElementSize<HTMLDivElement>();
@@ -19,10 +19,10 @@ function CounterWidget(props: WidgetInfo) {
           left: 0,
           bottom: 0,
           right: 0,
-          position: "absolute",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <span style={{ fontSize: `${0.25 * size}px` }}>{`${props.value}`}</span>

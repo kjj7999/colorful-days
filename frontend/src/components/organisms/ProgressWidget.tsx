@@ -1,7 +1,7 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useObserveElementSize } from "../../hooks/useObserverElementSize";
-import { WidgetInfo } from "./WidgetType";
+import { Box, CircularProgress } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useObserveElementSize } from '../../hooks/useObserverElementSize';
+import { WidgetInfo } from './WidgetType';
 
 function ProgressWidget(props: WidgetInfo) {
   const { width, height, ref } = useObserveElementSize<HTMLDivElement>();
@@ -20,17 +20,13 @@ function ProgressWidget(props: WidgetInfo) {
           left: 0,
           bottom: 0,
           right: 0,
-          position: "absolute",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <CircularProgress
-          size={0.8 * size}
-          variant="determinate"
-          value={progress}
-        />
+        <CircularProgress size={0.8 * size} variant="determinate" value={progress} />
       </Box>
       <Box
         sx={{
@@ -38,10 +34,10 @@ function ProgressWidget(props: WidgetInfo) {
           left: 0,
           bottom: 0,
           right: 0,
-          position: "absolute",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <span style={{ fontSize: `${0.25 * size}px` }}>{`${progress}%`}</span>

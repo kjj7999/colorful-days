@@ -1,11 +1,5 @@
-import {
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  MenuList,
-  Paper,
-} from "@mui/material";
-import { FaArrowRotateRight, FaCopy, FaGear, FaTrashCan } from "react-icons/fa6";
+import { ListItemIcon, ListItemText, MenuItem, MenuList, Paper } from '@mui/material';
+import { FaArrowRotateRight, FaCopy, FaGear, FaTrashCan } from 'react-icons/fa6';
 
 interface WidgetContextMenuProps {
   x: number;
@@ -14,11 +8,7 @@ interface WidgetContextMenuProps {
 
 function WidgetContextMenu({ x, y }: WidgetContextMenuProps) {
   return (
-    <Paper
-      elevation={3}
-      style={{ top: y, left: x, zIndex: 5000}}
-      sx={{ width: 200, position: "absolute"}}
-    >
+    <Paper elevation={3} style={{ top: y, left: x, zIndex: 5000 }} sx={{ width: 200, position: 'absolute' }}>
       <MenuList>
         <MenuItem>
           <ListItemIcon>

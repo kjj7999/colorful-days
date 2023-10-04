@@ -1,4 +1,4 @@
-import { WidgetInfo } from "./WidgetType";
+import { WidgetInfo } from './WidgetType';
 
 function LinkWidget(prop: WidgetInfo) {
   return (
