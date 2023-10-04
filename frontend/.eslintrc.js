@@ -9,6 +9,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'airbnb-typescript',
     'prettier',
+    'plugin:import/recommended',
     'plugin:prettier/recommended',
   ],
   overrides: [],
@@ -40,6 +41,9 @@ module.exports = {
       'error',
       'ignorePackages',
       {
+        '': 'never',
+        js: 'never',
+        jsx: 'never',
         ts: 'never',
         tsx: 'never',
       },
