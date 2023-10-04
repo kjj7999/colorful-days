@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 import { Layout, Layouts, Responsive, WidthProvider } from "react-grid-layout";
+import { TextField } from "@mui/material";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegCircleXmark, FaRegFloppyDisk } from "react-icons/fa6";
 import Widget from "../components/organisms/Widget";
@@ -25,6 +26,7 @@ let widgetInfos: WidgetInfo[] = [
 
 function Dashboard() {
   const [title, setTitle] = useState("Dashboard");
+  const [titleText, setTitleText] = useState("");
   const [layout, setLayout] = useState<Layouts>({ lg: layout1 });
   const [backupLayout, setBackupLayout] = useState<Layouts>({ lg: layout1 });
   const [breakpoint, setBreakPoint] = useState<String>("lg");
@@ -42,7 +44,7 @@ function Dashboard() {
 
   function onLayoutChange(currentLayout: Layout[], allLayouts: Layouts) {
     if (breakpoint === "lg" || breakpoint === "md") {
-      setLayout({ lg: currentLayout, md: currentLayout , sm: allLayouts.sm});
+      setLayout({ lg: currentLayout, md: currentLayout, sm: allLayouts.sm });
     } else if (breakpoint === "sm") {
       setLayout({
         lg: layout.lg.map((l) => {
@@ -80,6 +82,11 @@ function Dashboard() {
         return { ...l, static: !l.static };
       }),
     });
+    if (isEdit) {
+      setTitle(titleText);
+    } else {
+      setTitleText(title);
+    }
     setIsEdit(!isEdit);
   }
 
@@ -113,13 +120,34 @@ function Dashboard() {
   return (
     <div onClick={handleClick} onContextMenu={handleContextMenu}>
       <div className="p-3">
-        <span className={"text-xl font-bold"}>{title}</span>
+        <div className="h-8">
+          {!isEdit && <span className={"text-2xl font-bold"}>{title}</span>}
+          {isEdit && (
+            <TextField
+              id="title"
+              variant="outlined"
+              size="small"
+              value={titleText}
+              onChange={(e) => setTitleText(e.target.value)}
+            />
+          )}
+        </div>
         <div className={"mt-3 flex"}>
-          {isEdit && <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk />}>Save</ActionButton>}
-          {isEdit && <ActionButton onClick={cancelEdit} icon={<FaRegCircleXmark />}>Cancel</ActionButton>}
-          {!isEdit && <ActionButton onClick={toggleEdit} icon={<FaRegEdit />}>
-            Edit
-          </ActionButton>}
+          {isEdit && (
+            <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk />}>
+              Save
+            </ActionButton>
+          )}
+          {isEdit && (
+            <ActionButton onClick={cancelEdit} icon={<FaRegCircleXmark />}>
+              Cancel
+            </ActionButton>
+          )}
+          {!isEdit && (
+            <ActionButton onClick={toggleEdit} icon={<FaRegEdit />}>
+              Edit
+            </ActionButton>
+          )}
         </div>
       </div>
       <ResponsiveGridLayout
