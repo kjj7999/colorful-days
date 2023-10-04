@@ -7,6 +7,7 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'airbnb',
     'airbnb-typescript',
     'prettier',
     'plugin:import/recommended',
@@ -18,6 +19,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
     createDefaultProgram: true,
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
@@ -31,6 +33,7 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'react/jsx-props-no-spreading': 'warn',
     'react/no-unescaped-entities': 'off',
+    'react/destructuring-assignment': 'warn',
     'prettier/prettier': [
       'error',
       {
