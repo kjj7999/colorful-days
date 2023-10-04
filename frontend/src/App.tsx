@@ -14,7 +14,6 @@ function App() {
           Learn React
         </a>
       </header>
-      <div className={'bg-gray-500 text-red-500'}>abc</div>
     </div>
   );
 }

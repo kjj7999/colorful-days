@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import '../../node_modules/react-grid-layout/css/styles.css';
-import '../../node_modules/react-resizable/css/styles.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 import { Layout, Layouts, Responsive, WidthProvider } from 'react-grid-layout';
 import { TextField } from '@mui/material';
 import { FaRegEdit } from 'react-icons/fa';
@@ -84,7 +84,7 @@ function Dashboard() {
   function showContextMenu(item: string, x: number, y: number) {
     console.log(`show context menu parent ${item}`);
     setIsContextMenu(false);
-    setPosition({ x: x, y: y });
+    setPosition({ x, y });
     setIsContextMenu(true);
   }
 
@@ -118,10 +118,10 @@ function Dashboard() {
   }
 
   return (
-    <div onClick={handleClick} onContextMenu={handleContextMenu}>
+    <div onClick={handleClick} onContextMenu={handleContextMenu} role="presentation">
       <div className="p-3">
         <div className="h-8">
-          {!isEdit && <span className={'text-2xl font-bold'}>{title}</span>}
+          {!isEdit && <span className="text-2xl font-bold">{title}</span>}
           {isEdit && (
             <TextField
               id="title"
@@ -132,7 +132,7 @@ function Dashboard() {
             />
           )}
         </div>
-        <div className={'mt-3 flex'}>
+        <div className="flex mt-3">
           {isEdit && (
             <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk />}>
               Save

@@ -33,6 +33,7 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'react/jsx-props-no-spreading': 'warn',
     'react/no-unescaped-entities': 'off',
+    'react/jsx-no-bind': 'warn',
     'react/destructuring-assignment': 'warn',
     'prettier/prettier': [
       'error',

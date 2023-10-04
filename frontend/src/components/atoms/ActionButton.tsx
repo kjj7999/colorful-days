@@ -18,4 +18,12 @@ function ActionButton({ children, icon, size = 'medium', onClick }: ActionButton
     </div>
   );
 }
+
+ActionButton.defaultProps = {
+  icon: undefined,
+  children: null,
+  size: 'medium',
+  onClick: null,
+};
+
 export default ActionButton;

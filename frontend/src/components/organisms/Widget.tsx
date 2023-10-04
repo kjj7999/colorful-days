@@ -20,8 +20,8 @@ const WIDGET_COMPONENTS: Record<WidgetType, ComponentType<WidgetInfo>> = {
 interface WidgetProps {
   item: string;
   editable: boolean;
-  onClick: Function;
-  onContextMenu: Function;
+  onClick: () => void;
+  onContextMenu: (item: string, x: number, y: number) => void;
   widgetInfo: WidgetInfo;
 }
 
@@ -70,43 +70,42 @@ function Widget({ item, editable, onClick, onContextMenu, widgetInfo }: WidgetPr
   useOnClickOutside(widgetBox, handleClickOutside);
 
   return (
-    <>
-      <div
-        className={'w-full h-full'}
-        style={{ zIndex: '-1' }}
-        onContextMenu={handleContextMenu}
-        onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        ref={widgetBox}
+    <div
+      className="w-full h-full"
+      style={{ zIndex: '-1' }}
+      onContextMenu={handleContextMenu}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      ref={widgetBox}
+      role="presentation"
+    >
+      <Paper
+        component="div"
+        sx={{
+          width: 1,
+          height: 1,
+          border: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
       >
-        <Paper
-          component="div"
-          sx={{
-            width: 1,
-            height: 1,
-            border: 1,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <div>
-            <span className={'font-sans font-bold text-lg text-primary ml-1'}>{widgetInfo.title}</span>
-            {isHover && editable && (
-              <span className={'float-right h-full'}>
-                <IconButton size="small" onClick={handleDeleteClick}>
-                  <FaTrashCan className={'text-md'} />
-                </IconButton>
-                <IconButton size="small" onClick={handleDetailClick}>
-                  <FaEllipsisVertical className={'text-md'} />
-                </IconButton>
-              </span>
-            )}
-          </div>
-          <WidgetComponent {...widgetInfo} />
-        </Paper>
-      </div>
-    </>
+        <div>
+          <span className="ml-1 font-sans text-lg font-bold text-primary">{widgetInfo.title}</span>
+          {isHover && editable && (
+            <span className="float-right h-full">
+              <IconButton size="small" onClick={handleDeleteClick}>
+                <FaTrashCan className="text-md" />
+              </IconButton>
+              <IconButton size="small" onClick={handleDetailClick}>
+                <FaEllipsisVertical className="text-md" />
+              </IconButton>
+            </span>
+          )}
+        </div>
+        <WidgetComponent {...widgetInfo} />
+      </Paper>
+    </div>
   );
 }
 
