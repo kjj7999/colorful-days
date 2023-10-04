@@ -26,6 +26,7 @@ let widgetInfos: WidgetInfo[] = [
 function Dashboard() {
   const [title, setTitle] = useState("Dashboard");
   const [layout, setLayout] = useState<Layouts>({ lg: layout1 });
+  const [backupLayout, setBackupLayout] = useState<Layouts>({ lg: layout1 });
   const [breakpoint, setBreakPoint] = useState<String>("lg");
   const [isEdit, setIsEdit] = useState(false);
   const [isContextMenu, setIsContextMenu] = useState(false);
@@ -41,7 +42,7 @@ function Dashboard() {
 
   function onLayoutChange(currentLayout: Layout[], allLayouts: Layouts) {
     if (breakpoint === "lg" || breakpoint === "md") {
-      setLayout({ lg: currentLayout, md: currentLayout });
+      setLayout({ lg: currentLayout, md: currentLayout , sm: allLayouts.sm});
     } else if (breakpoint === "sm") {
       setLayout({
         lg: layout.lg.map((l) => {
@@ -73,12 +74,18 @@ function Dashboard() {
   }
 
   function toggleEdit(event: React.MouseEvent<HTMLButtonElement>) {
+    setBackupLayout(layout);
     setLayout({
       lg: layout.lg.map((l) => {
         return { ...l, static: !l.static };
       }),
     });
     setIsEdit(!isEdit);
+  }
+
+  function cancelEdit() {
+    setLayout(backupLayout);
+    setIsEdit(false);
   }
 
   function showContextMenu(item: string, x: number, y: number) {
@@ -109,7 +116,7 @@ function Dashboard() {
         <span className={"text-xl font-bold"}>{title}</span>
         <div className={"mt-3 flex"}>
           {isEdit && <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk />}>Save</ActionButton>}
-          {isEdit && <ActionButton onClick={toggleEdit} icon={<FaRegCircleXmark />}>Cancel</ActionButton>}
+          {isEdit && <ActionButton onClick={cancelEdit} icon={<FaRegCircleXmark />}>Cancel</ActionButton>}
           {!isEdit && <ActionButton onClick={toggleEdit} icon={<FaRegEdit />}>
             Edit
           </ActionButton>}
