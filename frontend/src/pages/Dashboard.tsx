@@ -137,28 +137,30 @@ function Dashboard() {
             />
           )}
         </div>
-        <div className="flex mt-3">
-          {isEdit && (
-            <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk className="align-middle" />}>
-              Save
-            </ActionButton>
-          )}
-          {isEdit && (
-            <ActionButton onClick={cancelEdit} icon={<FaRegCircleXmark className="align-middle" />}>
-              Cancel
-            </ActionButton>
-          )}
-          {!isEdit && (
-            <ActionButton onClick={toggleEdit} icon={<FaRegEdit className="align-middle" />}>
-              Edit
-            </ActionButton>
-          )}
-          {!isEdit && (
-            <ActionButton onClick={addWidget} icon={<FaPlus className="align-middle" />}>
-              Add Widget
-            </ActionButton>
-          )}
-        </div>
+        {(breakpoint === 'lg' || breakpoint === 'md') && (
+          <div className="flex mt-3">
+            {isEdit && (
+              <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk className="align-middle" />}>
+                Save
+              </ActionButton>
+            )}
+            {isEdit && (
+              <ActionButton onClick={cancelEdit} icon={<FaRegCircleXmark className="align-middle" />}>
+                Cancel
+              </ActionButton>
+            )}
+            {!isEdit && (
+              <ActionButton onClick={toggleEdit} icon={<FaRegEdit className="align-middle" />}>
+                Edit
+              </ActionButton>
+            )}
+            {!isEdit && (
+              <ActionButton onClick={addWidget} icon={<FaPlus className="align-middle" />}>
+                Add Widget
+              </ActionButton>
+            )}
+          </div>
+        )}
       </div>
       <ResponsiveGridLayout
         layouts={layout}
