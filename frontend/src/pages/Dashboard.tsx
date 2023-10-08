@@ -61,8 +61,9 @@ function Dashboard() {
     }
   }
 
-  const toggleEdit = useCallback(() => {
+  function toggleEdit() {
     setBackupLayout(layout);
+    console.log(JSON.stringify(layout));
     setLayout({
       lg: layout.lg.map((l) => {
         return { ...l, static: !l.static };
@@ -74,7 +75,7 @@ function Dashboard() {
       setTitleText(title);
     }
     setIsEdit(!isEdit);
-  }, []);
+  }
 
   const cancelEdit = useCallback(() => {
     setLayout(backupLayout);
