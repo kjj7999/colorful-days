@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import { Layout, Layouts, Responsive, WidthProvider } from 'react-grid-layout';
 import { TextField } from '@mui/material';
 import { FaRegEdit } from 'react-icons/fa';
-import { FaRegCircleXmark, FaRegFloppyDisk } from 'react-icons/fa6';
+import { FaRegCircleXmark, FaRegFloppyDisk, FaPlus } from 'react-icons/fa6';
 import Widget from '../components/organisms/Widget';
 import { WidgetInfo } from '../components/organisms/WidgetType';
 import ActionButton from '../components/atoms/ActionButton';
@@ -38,9 +38,9 @@ function Dashboard() {
     // console.log("use effect " + isEdit);
   });
 
-  function onBreakpointChange(newBreakpoint: string, newCols: number) {
+  const onBreakpointChange = useCallback((newBreakpoint: string, newCols: number) => {
     setBreakPoint(newBreakpoint);
-  }
+  }, []);
 
   function onLayoutChange(currentLayout: Layout[], allLayouts: Layouts) {
     if (breakpoint === 'lg' || breakpoint === 'md') {
@@ -61,7 +61,7 @@ function Dashboard() {
     }
   }
 
-  function toggleEdit(event: React.MouseEvent<HTMLButtonElement>) {
+  const toggleEdit = useCallback(() => {
     setBackupLayout(layout);
     setLayout({
       lg: layout.lg.map((l) => {
@@ -74,12 +74,16 @@ function Dashboard() {
       setTitleText(title);
     }
     setIsEdit(!isEdit);
-  }
+  }, []);
 
-  function cancelEdit() {
+  const cancelEdit = useCallback(() => {
     setLayout(backupLayout);
     setIsEdit(false);
-  }
+  }, []);
+
+  const addWidget = useCallback(() => {
+    console.log('add widget');
+  }, []);
 
   function showContextMenu(item: string, x: number, y: number) {
     console.log(`show context menu parent ${item}`);
@@ -134,18 +138,23 @@ function Dashboard() {
         </div>
         <div className="flex mt-3">
           {isEdit && (
-            <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk />}>
+            <ActionButton onClick={toggleEdit} icon={<FaRegFloppyDisk className="align-middle" />}>
               Save
             </ActionButton>
           )}
           {isEdit && (
-            <ActionButton onClick={cancelEdit} icon={<FaRegCircleXmark />}>
+            <ActionButton onClick={cancelEdit} icon={<FaRegCircleXmark className="align-middle" />}>
               Cancel
             </ActionButton>
           )}
           {!isEdit && (
-            <ActionButton onClick={toggleEdit} icon={<FaRegEdit />}>
+            <ActionButton onClick={toggleEdit} icon={<FaRegEdit className="align-middle" />}>
               Edit
+            </ActionButton>
+          )}
+          {!isEdit && (
+            <ActionButton onClick={addWidget} icon={<FaPlus className="align-middle" />}>
+              Add Widget
             </ActionButton>
           )}
         </div>
