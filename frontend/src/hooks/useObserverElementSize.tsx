@@ -16,6 +16,7 @@ export const useObserveElementSize = <T extends HTMLElement>() => {
     }
 
     return () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       ref.current && observer.unobserve(ref.current);
     };
   }, []);
